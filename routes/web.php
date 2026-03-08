@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SslCommerzPaymentController;
+use App\Http\Controllers\CheckoutController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +12,21 @@ use App\Http\Controllers\SslCommerzPaymentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+require __DIR__.'/auth.php';
+
+// Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
+
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     });
+
+// });
+
 Route::get('/', function () {
     return view('pages.index');
 })->name('home');
@@ -23,18 +38,24 @@ Route::get('/details', function () {
 Route::get('/checkout', function () {
     return view('pages.checkout');
 })->name('checkout');
+    
+
+Route::post('/checkout_page', [CheckoutController::class, 'store'])->name('checkout.store');
+
+// Route ::get('/success_page', function () {
+//     return view('pages.success');
+// })->name('success_page');
+
+Route::get('/success/{order}', [CheckoutController::class, 'success'])->name('success_page');
+
+Route::get('/dashboard', function () {
+    return view('dashboard'); 
 
 
+})->middleware(['auth'])->name('dashboard');
 
-Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
-Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
+Route::get('/order_list', function () {
+    return view('admin.order_list'); 
 
-Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
-Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
-
-Route::post('/success', [SslCommerzPaymentController::class, 'success']);
-Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
-Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
-
-Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
-//SSLCOMMERZ END
+    
+})->middleware(['auth'])->name('order_list');

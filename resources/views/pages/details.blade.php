@@ -194,7 +194,7 @@
               id="heroImg"
               src="images/course.jpg"
               alt="Item image"
-              class="w-full h-56 md:h-72 object-cover"
+              class="w-full h-90 md:h-90 object-cover"
               loading="lazy"
             />
             <div class="absolute inset-0 img-overlay"></div>
@@ -284,7 +284,7 @@
 
             <div class="mt-6 rounded-2xl glass p-5">
               <p class="text-sm">সাপোর্ট</p>
-              <p class="mt-1 text-lg font-bold">WhatsApp: +8801XXXXXXXXX</p>
+              <p class="mt-1 text-lg font-bold">WhatsApp: ‪+880 1322‑696950‬</p>
               <p class="mt-2 text-sm muted">আপনার আসল কন্টাক্ট দিন।</p>
             </div>
           </aside>
@@ -359,37 +359,37 @@
         {
           id: "c1",
           type: "course",
-          title: "Facebook Monetization Masterclass",
+          title: "🎬 Facebook Monetization Mastery",
           category: "Marketing",
-          price: 29,
+          price: 349,
           rating: 4.9,
           badge: "Best Seller",
-          desc: "Learn monetization, content strategy, and growth system.",
+          desc: "আমাদের লক্ষ্য শুধু কোর্স বিক্রি নয় — আপনাকে ফলাফল পর্যন্ত পৌঁছে দেওয়া। 🚀 আজই শুরু করুন সঠিক দিকনির্দেশনা থাকলে আপনিও ফেসবুককে ইনকামের একটি শক্তিশালী প্ল্যাটফর্মে রূপান্তর করতে পারবেন। এখনই এনরোল করুন এবং আপনার ডিজিটাল আয়ের যাত্রা শুরু করুন।",
           includes: ["45+ lessons", "Templates", "Community"],
           overview:
-            "Complete monetization workflow: niche, content system, growth, and converting views to revenue.",
+            "Movie Clip Content দিয়ে বৈধভাবে আয় করার সম্পূর্ণ গাইড ডিজিটাল দুনিয়ায় কনটেন্টই শক্তি। আর সঠিক কৌশল জানলে সেই কনটেন্ট থেকেই তৈরি করা যায় স্থায়ী আয়ের উৎস। অনেকে মুভি ক্লিপ আপলোড করে, কিন্তু কপিরাইট সমস্যা, পলিসি না জানা, ভুল সেটআপ — এসব কারণে মনিটাইজেশন পায় না। আমাদের প্রিমিয়াম কোর্স আপনাকে শেখাবে সঠিক, স্ট্র্যাটেজিক ও স্মার্ট উপায়ে কাজ করার সম্পূর্ণ প্রক্রিয়া। ",
           modules: [
             {
-              title: "Module 1: Foundation",
-              bullets: ["Niche + offer", "Setup tools", "Avoid mistakes"],
+              title: "📘 কোর্সে আপনি যা শিখবেন ",
+              bullets: ["সঠিকভাবে মুভি ক্লিপ নির্বাচন ও প্রফেশনাল এডিটিং", "কনটেন্টকে ইউনিক ও ভ্যালু-অ্যাডেড বানানোর কৌশল", "কপিরাইট রিস্ক কমানোর স্ট্র্যাটেজিক এপ্রোচ", "⁠প্রফেশনাল ফেসবুক পেজ সেটআপ ও অপটিমাইজেশন","⁠  ⁠In-Stream Ads চালু করার ধাপসমূহ"," ⁠দ্রুত মনিটাইজেশন পাওয়ার রোডম্যাপ", "ভাইরাল গ্রোথ ও অর্গানিক রিচ বাড়ানোর পদ্ধতি"],
             },
             {
-              title: "Module 2: Content",
-              bullets: ["Hooks", "Scripts", "Posting plan"],
+              title: "🎯 এই কোর্সটি যাদের জন্য",
+              bullets: ["নতুন যারা অনলাইন ইনকাম শুরু করতে চান", "যারা ভিডিও আপলোড করছেন কিন্তু মনিটাইজেশন পাচ্ছেন না", "যারা সিরিয়াসভাবে ডিজিটাল ইনকাম সোর্স তৈরি করতে চান", "স্টুডেন্ট, ফ্রিল্যান্সার, পার্ট-টাইম আর্নার"],
             },
             {
-              title: "Module 3: Monetization",
-              bullets: ["Earnings methods", "Scaling", "Tracking"],
+              title: "⭐ কেন NET MART?",
+              bullets: ["াপে ধাপে স্ট্রাকচারড লার্নিং", "সহজ ভাষায় ব্যাখ্যা", "বাস্তব অভিজ্ঞতার ভিত্তিতে গাইডলাইন", "⁠আপডেটেড কনটেন্ট ও সাপোর্ট"],
             },
           ],
-          image: "images/course.jpg", // ✅ image
+            image: "images/course1.jpeg",
         },
         {
           id: "c2",
           type: "course",
           title: "Video Editing Crash Course",
           category: "Creative",
-          price: 19,
+          price: 249,
           rating: 4.8,
           badge: "New",
           desc: "Edit professional videos fast using proven workflow.",
@@ -406,7 +406,31 @@
               bullets: ["Cuts", "Sound", "Timing"],
             },
           ],
-          image: "images/course.jpg", // ✅ same image
+               image: "images/course2.jpeg",
+        },
+        {
+          id: "c3",
+          type: "course",
+          title: "Advanced Video Editing",
+          category: "Creative",
+          price: 449,
+          rating: 4.9,
+          badge: "New",
+          desc: "Edit professional videos fast using proven workflow.",
+          includes: ["Projects", "Presets", "Export settings"],
+          overview:
+            "Learn editing workflow, effects, captions, and exporting for social platforms.",
+          modules: [
+            {
+              title: "Module 1: Setup",
+              bullets: ["Workspace", "Shortcuts", "Project structure"],
+            },
+            {
+              title: "Module 2: Editing",
+              bullets: ["Cuts", "Sound", "Timing"],
+            },
+          ],
+               image: "images/course3.jpeg",
         },
       ];
 
@@ -445,7 +469,7 @@
       const all = [...courses, ...softwares];
 
       const qs = (k) => new URLSearchParams(location.search).get(k);
-      const money = (n) => `$${Number(n).toFixed(0)}`;
+      const money = (n) => `৳${Number(n).toFixed(0)}`;
 
       const escapeHtml = (str) =>
         String(str)

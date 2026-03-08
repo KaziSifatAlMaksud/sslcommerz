@@ -346,8 +346,8 @@
             <div class="mt-6 rounded-3xl p-6 glass">
               <p class="text-sm muted">বান্ডেল মূল্য</p>
               <div class="mt-2 flex items-end gap-3">
-                <div class="text-5xl font-extrabold">$49</div>
-                <div class="muted mb-2 line-through">$199</div>
+                <div class="text-5xl font-extrabold">৳49</div>
+                <div class="muted mb-2 line-through">৳199</div>
               </div>
               <p class="mt-3 text-sm">
                 লাইফটাইম অ্যাক্সেস + আপডেট অন্তর্ভুক্ত।
@@ -397,7 +397,7 @@
 
             <div class="mt-6 rounded-2xl p-5 glass">
               <p class="text-sm">সাহায্য দরকার?</p>
-              <p class="mt-1 text-lg font-bold">WhatsApp: +8801XXXXXXXXX</p>
+              <p class="mt-1 text-lg font-bold">WhatsApp: ‪+880 1322‑696950‬</p>
               <p class="mt-2 text-sm muted">আপনার আসল কন্টাক্ট দিন।</p>
             </div>
           </aside>
@@ -428,31 +428,34 @@
           id: "c1",
           title: "Facebook Monetization Masterclass",
           category: "Marketing",
-          price: 29,
+          price: 349,
           rating: 4.9,
           badge: "Best Seller",
           desc: "মনেটাইজেশন, কনটেন্ট স্ট্র্যাটেজি এবং গ্রোথ সিস্টেম শিখুন।",
           includes: ["৪৫+ লেসন", "টেমপ্লেট", "কমিউনিটি"],
+           image: "images/course1.jpeg",
         },
         {
           id: "c2",
           title: "Video Editing Crash Course",
           category: "Creative",
-          price: 19,
+          price: 349,
           rating: 4.8,
           badge: "New",
           desc: "প্রুভেন ওয়ার্কফ্লো দিয়ে দ্রুত প্রোফেশনাল ভিডিও এডিট করুন।",
           includes: ["প্রজেক্ট", "প্রিসেট", "এক্সপোর্ট সেটিংস"],
+            image: "images/course2.jpeg",
         },
         {
           id: "c3",
           title: "SEO for Beginners",
           category: "Marketing",
-          price: 15,
+          price: 349,
           rating: 4.7,
           badge: "Popular",
           desc: "স্টেপ-বাই-স্টেপ SEO শিখে অর্গানিক ট্রাফিক বাড়ান।",
           includes: ["অন-পেজ", "অফ-পেজ", "টুলস লিস্ট"],
+          image: "images/course3.jpeg",
         },
       ];
 
@@ -566,9 +569,8 @@
         const isSoftware = item.type === "software";
 
         // ✅ SAME IMAGE FOR ALL
-        const imageSrc = isSoftware
-          ? "images/software.jpg"
-          : "images/course.jpg";
+       const imageSrc =
+            item.image || (isSoftware ? "images/software.jpg" : "images/course.jpg");
 
         const meta = isSoftware
           ? `<div class="mt-3 flex flex-wrap gap-2 text-xs">
@@ -578,76 +580,76 @@
           : "";
 
         return `
-    <article class="glass rounded-3xl overflow-hidden shadow-soft hover:opacity-95 transition">
+                <article class="glass rounded-3xl overflow-hidden shadow-soft hover:opacity-95 transition">
 
-      <!-- ✅ IMAGE -->
-      <div class="relative">
-        <img
-          src="${imageSrc}"
-          alt="${item.title}"
-          class="w-full h-44 object-cover"
-          loading="lazy"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-          <p class="text-xs text-white/80">
-            ${isSoftware ? "সফটওয়্যার" : "কোর্স"} • ${item.category}
-          </p>
-          <span class="text-xs px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-300/30 text-emerald-100">
-            ${item.badge || "ফিচার্ড"}
-          </span>
-        </div>
-      </div>
+                  <!-- ✅ IMAGE -->
+                  <div class="relative">
+                    <img
+                      src="${imageSrc}"
+                      alt="${item.title}"
+                      class="w-full h-80 object-cover"
+                      loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+                    <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                      <p class="text-xs text-white/80">
+                        ${isSoftware ? "সফটওয়্যার" : "কোর্স"} • ${item.category}
+                      </p>
+                      <span class="text-xs px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-300/30 text-emerald-100">
+                        ${item.badge || "ফিচার্ড"}
+                      </span>
+                    </div>
+                  </div>
 
-      <!-- CONTENT -->
-      <div class="p-6">
-        <h3 class="text-lg font-bold">${item.title}</h3>
+                  <!-- CONTENT -->
+                  <div class="p-6">
+                    <h3 class="text-lg font-bold">${item.title}</h3>
 
-        <p class="mt-3 text-sm muted leading-relaxed">
-          ${item.desc}
-        </p>
+                    <p class="mt-3 text-sm muted leading-relaxed">
+                      ${item.desc}
+                    </p>
 
-        ${meta}
+                    ${meta}
 
-        <div class="mt-4 flex flex-wrap gap-2">
-          ${(item.includes || [])
-            .slice(0, 3)
-            .map(
-              (x) =>
-                `<span class="text-xs px-2.5 py-1 rounded-full glass">${x}</span>`,
-            )
-            .join("")}
-        </div>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                      ${(item.includes || [])
+                        .slice(0, 3)
+                        .map(
+                          (x) =>
+                            `<span class="text-xs px-2.5 py-1 rounded-full glass">${x}</span>`,
+                        )
+                        .join("")}
+                    </div>
 
-        <div class="mt-5 flex items-center justify-between">
-          <div>
-            <p class="text-sm muted">মূল্য</p>
-            <p class="text-2xl font-extrabold">${money(item.price)}</p>
-          </div>
-          <div class="text-right">
-            <p class="text-sm muted">রেটিং</p>
-            <p class="text-sm font-semibold">★ ${item.rating || 4.8}</p>
-          </div>
-        </div>
+                    <div class="mt-5 flex items-center justify-between">
+                      <div>
+                        <p class="text-sm muted">মূল্য</p>
+                        <p class="text-2xl font-extrabold">${money(item.price)}</p>
+                      </div>
+                      <div class="text-right">
+                        <p class="text-sm muted">রেটিং</p>
+                        <p class="text-sm font-semibold">★ ${item.rating || 4.8}</p>
+                      </div>
+                    </div>
 
-        <div class="mt-5 grid grid-cols-2 gap-3">
-          <a
-            href="details?item=${encodeURIComponent(item.id)}"
-            class="inline-flex justify-center items-center px-4 py-2.5 rounded-2xl glass hover:opacity-90 transition font-semibold"
-          >
-            বিস্তারিত
-          </a>
+                    <div class="mt-5 grid grid-cols-2 gap-3">
+                      <a
+                        href="details?item=${encodeURIComponent(item.id)}"
+                        class="inline-flex justify-center items-center px-4 py-2.5 rounded-2xl glass hover:opacity-90 transition font-semibold"
+                      >
+                        বিস্তারিত
+                      </a>
 
-          <a
-            href="checkout?item=${encodeURIComponent(item.id)}"
-            class="inline-flex justify-center items-center px-4 py-2.5 rounded-2xl bg-indigo-500 hover:bg-indigo-400 transition shadow-soft font-semibold"
-          >
-            কিনুন
-          </a>
-        </div>
-      </div>
-    </article>
-  `;
+                      <a
+                        href="checkout?item=${encodeURIComponent(item.id)}"
+                        class="inline-flex justify-center items-center px-4 py-2.5 rounded-2xl bg-indigo-500 hover:bg-indigo-400 transition shadow-soft font-semibold"
+                      >
+                        কিনুন
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              `;
       }
 
       function applyFilters() {

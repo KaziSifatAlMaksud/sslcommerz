@@ -126,34 +126,48 @@
       <section class="glass rounded-3xl p-7">
         <h1 class="text-3xl font-extrabold">চেকআউট</h1>
         <p class="mt-2 muted">
-          আপনার তথ্য দিন এবং পেমেন্টে এগিয়ে যান। (ডেমো — পরে গেটওয়ের সাথে কানেক্ট করবেন)
+          আপনার তথ্য দিন এবং পেমেন্টে এগিয়ে যান। 
         </p>
 
-        <form id="checkoutForm" class="mt-6 space-y-4" onsubmit="return submitOrder(event)">
+        <form id="checkoutForm" class="mt-6 space-y-4" 
+            action="{{ route('checkout.store') }}" 
+            method="POST" 
+            enctype="multipart/form-data">
+          @csrf
+
+          @if(session('error'))
+            <div class="mb-4 p-4 bg-red-500/20 border border-red-400 text-red-200 rounded-xl">
+                {{ session('error') }}
+            </div>
+          @endif
+
+          <input type="hidden" name="amount" id="amountInput" value="" />
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label class="text-sm">পূর্ণ নাম</label>
-              <input required name="name" placeholder="আপনার নাম"
+              <input required name="name" placeholder="আপনার নাম" value="{{ old('name') }}"
                      class="mt-2 w-full rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-300/40 input-ui" />
             </div>
             <div>
               <label class="text-sm">মোবাইল</label>
-              <input required name="phone" placeholder="+880..."
+              <input required name="phone" placeholder="+880..." value="{{ old('phone') }}"
                      class="mt-2 w-full rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-300/40 input-ui" />
             </div>
           </div>
 
           <div>
             <label class="text-sm">ইমেইল</label>
-            <input required type="email" name="email" placeholder="you@example.com"
+            <input required type="email" name="email" placeholder="you@example.com" value="{{ old('email') }}"
                    class="mt-2 w-full rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-300/40 input-ui" />
             <p class="mt-2 text-xs muted">এই ইমেইলে অ্যাক্সেস/ডেলিভারি পাঠানো হবে।</p>
           </div>
 
+          
+
           <div>
             <label class="text-sm">কুপন (ঐচ্ছিক)</label>
             <div class="mt-2 flex gap-2">
-              <input id="couponInput" placeholder="SAVE10"
+              <input id="couponInput" placeholder="SAVE10" 
                      class="w-full rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-300/40 input-ui" />
               <button type="button" onclick="applyCoupon()"
                       class="px-4 py-3 rounded-2xl glass hover:opacity-90 transition font-semibold">
@@ -162,6 +176,65 @@
             </div>
             <p id="couponMsg" class="mt-2 text-xs muted"></p>
           </div>
+
+          <div>
+            <label class="text-sm">Bkash / Nagad / Rocket (Transaction ID)</label>
+            <div class="mt-2 flex gap-2">
+              <input id="couponInput" placeholder="DBXX000000" name="transaction_bkash_id" value="{{ old('transaction_bkash_id') }}"
+                     class="w-full rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-300/40 input-ui" required />
+            </div>
+           
+          </div>
+
+
+          <div>
+             <label class="text-sm">Upload Transaction Screenshot</label>
+              <!-- Attachment Upload -->
+                 <!-- Preview -->
+                <div id="filePreview" class="mt-4"></div>
+              <div class="mt-4">
+              
+                <input 
+                  type="file" 
+                  id="transactionFile" 
+                  name="transaction_file" 
+                  accept="image/*" 
+                  class="w-full text-sm text-gray-500
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-indigo-100 file:text-indigo-700
+                        hover:file:bg-indigo-200
+                        cursor-pointer"
+                  onchange="previewTransactionFile(event)"
+                />
+
+             
+              </div>
+            </div>
+
+            <script>
+            function previewTransactionFile(event) {
+              const previewContainer = document.getElementById('filePreview');
+              previewContainer.innerHTML = ''; // Clear previous preview
+
+              const file = event.target.files[0];
+              if (!file) return;
+
+              const fileType = file.type;
+              if (!fileType.startsWith('image/')) {
+                previewContainer.innerHTML = '<p class="text-red-500 text-sm">Only image files are allowed.</p>';
+                return;
+              }
+
+              const img = document.createElement('img');
+              img.src = URL.createObjectURL(file);
+              img.className = "mt-2 max-h-48 rounded-lg border border-gray-200";
+              previewContainer.appendChild(img);
+            }
+            </script>
+
+
 
           <label class="flex items-start gap-3 text-sm">
             <input required type="checkbox" class="mt-1 h-4 w-4 rounded border-white/20 bg-black/20" />
@@ -172,22 +245,48 @@
             </span>
           </label>
 
-          {{-- <button type="submit"
-                  class="w-full rounded-2xl bg-indigo-500 hover:bg-indigo-400 transition shadow-soft px-5 py-3 font-semibold">
-     
-          </button> --}}
-          <button class="btn btn-primary btn-lg btn-block" id="sslczPayBtn"
+         <button type="button" onclick="openConfirmModal()"
+                class="w-full rounded-2xl bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 transition 
+                      shadow-md hover:shadow-lg text-white font-semibold px-5 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                নিশ্চিত করুন
+        </button>
+          {{-- <button class="btn btn-primary btn-lg btn-block" id="sslczPayBtn"
                         token="if you have any token validation"
                         postdata="your javascript arrays or objects which requires in backend"
                         order="If you already have the transaction generated for current order"
                         endpoint="{{ url('/pay-via-ajax') }}">   পেমেন্টে এগিয়ে যান
-                </button>
+                </button> --}}
 
           <p class="text-xs muted text-center">
-            এখানে SSLCommerz / ShurjoPay / Stripe এর রিডাইরেক্ট যুক্ত করুন।
+            
           </p>
         </form>
+
+
+
       </section>
+
+      <!-- Confirm Modal -->
+      <div id="confirmModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-6 w-80 text-center shadow-lg">
+
+          <h2 class="text-lg font-semibold mb-4">আপনি কি নিশ্চিত?</h2>
+          <p class="text-sm text-gray-600 mb-6">আপনি কি অর্ডারটি সাবমিট করতে চান?</p>
+
+          <div class="flex justify-center gap-4">
+            <button onclick="submitForm()"
+              class="px-5 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+              Yes
+            </button>
+
+            <button onclick="closeConfirmModal()"
+              class="px-5 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+              No
+            </button>
+          </div>
+
+        </div>
+      </div>
 
       <!-- Right: order summary -->
       <aside class="glass rounded-3xl p-7">
@@ -196,7 +295,7 @@
         <div class="mt-4 rounded-2xl glass p-5">
           <!-- ✅ Image -->
           <div class="rounded-2xl overflow-hidden border" style="border-color: var(--border);">
-            <img id="itemImg" src="images/course.jpg" alt="Item image" class="w-full h-40 object-cover" />
+            <img id="itemImg" src="images/course.jpg" alt="Item image" class="w-full h-80 object-cover" />
           </div>
 
           <p id="itemType" class="text-xs muted mt-4">—</p>
@@ -229,11 +328,11 @@
         </div>
 
         <div class="mt-5 rounded-2xl glass p-5">
-          <p class="text-sm">পেমেন্ট মেথড</p>
+          <p class="text-sm">পেমেন্ট মেথড / কোর্সের তথ্য</p>
           <p class="mt-1 text-sm muted">
-            Card / bKash / Nagad / Rocket (আপনার গেটওয়ের মাধ্যমে)
+            কোর্স ও সফটওয়্যার সম্পর্কে বিস্তারিত জানতে বা কোনো প্রশ্ন থাকলে আজই এই নম্বরে যোগাযোগ করুন।
           </p>
-          <p class="mt-2 text-xs muted">পেমেন্ট সফল হলে সাথে সাথে অ্যাক্সেস ডেলিভারি হবে।</p>
+          <p class="mt-2 text-xs muted">  WhatsApp: ‪+880 1322‑696950‬ </p>
         </div>
 
         <div class="mt-5">
@@ -245,6 +344,24 @@
       </aside>
     </div>
   </main>
+
+
+  <script>
+
+    function openConfirmModal(){
+        document.getElementById('confirmModal').classList.remove('hidden');
+        document.getElementById('confirmModal').classList.add('flex');
+    }
+
+    function closeConfirmModal(){
+        document.getElementById('confirmModal').classList.add('hidden');
+    }
+
+    function submitForm(){
+        document.getElementById('checkoutForm').submit();
+    }
+
+  </script>
 
   <script>
     // =========================
@@ -280,23 +397,86 @@
     // SAME ITEMS AS INDEX / DETAILS
     // (ADD image OPTIONAL)
     // =========================
-    const courses = [
-      { id:"c1", type:"course", title:"Facebook Monetization Masterclass", category:"Marketing", price:29, rating:4.9, badge:"Best Seller",
-        desc:"Learn monetization, content strategy, and growth system.", image:"images/course.jpg" },
-      { id:"c2", type:"course", title:"Video Editing Crash Course", category:"Creative", price:19, rating:4.8, badge:"New",
-        desc:"Edit professional videos fast using proven workflow.", image:"images/course.jpg" },
-      { id:"c3", type:"course", title:"SEO for Beginners", category:"Marketing", price:15, rating:4.7, badge:"Popular",
-        desc:"Rank websites and get organic traffic step-by-step.", image:"images/course.jpg" },
-    ];
+   const courses = [
+        {
+          id: "c1",
+           type: "course", 
+          title: "🎬 Facebook Monetization Mastery",
+          category: "Marketing",
+          price: 349,
+          rating: 4.9,
+          badge: "Best Seller",
+          desc: "মনেটাইজেশন, কনটেন্ট স্ট্র্যাটেজি এবং গ্রোথ সিস্টেম শিখুন।",
+          includes: ["৪৫+ লেসন", "টেমপ্লেট", "কমিউনিটি"],
+           image: "images/course1.jpeg",
+        },
+        {
+          id: "c2",
+          type: "course",
+          title: "Video Editing Crash Course",
+          category: "Creative",
+          price: 349,
+          rating: 4.8,
+          badge: "New",
+          desc: "প্রুভেন ওয়ার্কফ্লো দিয়ে দ্রুত প্রোফেশনাল ভিডিও এডিট করুন।",
+          includes: ["প্রজেক্ট", "প্রিসেট", "এক্সপোর্ট সেটিংস"],
+            image: "images/course2.jpeg",
+        },
+        {
+          id: "c3",
+          type: "course",
+          title: "SEO for Beginners",
+          category: "Marketing",
+          price: 349,
+          rating: 4.7,
+          badge: "Popular",
+          desc: "স্টেপ-বাই-স্টেপ SEO শিখে অর্গানিক ট্রাফিক বাড়ান।",
+          includes: ["অন-পেজ", "অফ-পেজ", "টুলস লিস্ট"],
+          image: "images/course3.jpeg",
+        },
+      ];
 
-    const softwares = [
-      { id:"s1", type:"software", title:"Canva Pro", category:"Design", price:9, rating:4.8, badge:"Top Tool",
-        desc:"Premium templates, brand kit, background remover.", platform:"Web", license:"Subscription", image:"images/software.jpg" },
-      { id:"s2", type:"software", title:"Adobe Photoshop", category:"Design", price:12, rating:4.7, badge:"Pro",
-        desc:"Advanced photo editing and design workflow.", platform:"Windows/Mac", license:"Subscription", image:"images/software.jpg" },
-      { id:"s3", type:"software", title:"CapCut Pro", category:"Video", price:8, rating:4.6, badge:"Trending",
-        desc:"Pro effects, transitions, and editing toolkit.", platform:"Mobile/Web", license:"Subscription", image:"images/software.jpg" },
-    ];
+   
+      const softwares = [
+        {
+          id: "s1",
+           type: "Software", 
+          title: "Canva Pro",
+          category: "Design",
+          price: 200,
+          rating: 4.8,
+          badge: "Top Tool",
+          desc: "প্রিমিয়াম টেমপ্লেট, ব্র্যান্ড কিট, ব্যাকগ্রাউন্ড রিমুভার।",
+          includes: ["১ বছর", "টিম ফিচার", "প্রিমিয়াম অ্যাসেটস"],
+          platform: "ওয়েব",
+          license: "সাবস্ক্রিপশন",
+        },
+        {
+          id: "s2",
+          type: "Software",
+          category: "Design",
+          price: 300,
+          rating: 4.7,
+          badge: "Pro",
+          desc: "অ্যাডভান্সড ফটো এডিটিং ও ডিজাইন ওয়ার্কফ্লো।",
+          includes: ["১ বছর", "আপডেট", "ক্লাউড স্টোরেজ"],
+          platform: "Windows/Mac",
+          license: "সাবস্ক্রিপশন",
+        },
+        {
+          id: "s3",
+          type: "Software",
+          title: "CapCut Pro",
+          category: "Video",
+          price: 8,
+          rating: 4.6,
+          badge: "Trending",
+          desc: "প্রো ইফেক্ট, ট্রানজিশন এবং এডিটিং টুলকিট।",
+          includes: ["৬ মাস", "প্রিমিয়াম ইফেক্ট", "এক্সপোর্ট"],
+          platform: "মোবাইল/ওয়েব",
+          license: "সাবস্ক্রিপশন",
+        },
+      ];
 
     const all = [...courses, ...softwares];
 
@@ -304,16 +484,18 @@
     // HELPERS
     // =========================
     const qs = (k) => new URLSearchParams(location.search).get(k);
-    const money = (n) => `$${Number(n).toFixed(0)}`;
+    const money = (n) => `৳${Number(n).toFixed(0)}`;
 
     // Coupon demo
     const COUPONS = { "SAVE10": 10, "SAVE20": 20 };
 
     let currentItem = null;
+    
     let currentDiscountPct = 0;
 
     function renderSummary(){
       if(!currentItem) return;
+      
 
       // ✅ image (fallback)
       const imgSrc = currentItem.image || (currentItem.type === "software" ? "images/software.jpg" : "images/course.jpg");
@@ -322,6 +504,8 @@
 
       document.getElementById("itemType").textContent =
         `${currentItem.type.toUpperCase()} • ${currentItem.category}`;
+
+        document.getElementById("amountInput").value = currentItem.price || 0;
 
       document.getElementById("itemTitle").textContent = currentItem.title;
       document.getElementById("itemDesc").textContent = currentItem.desc;
@@ -368,34 +552,6 @@
       }
       renderSummary();
     }
-
-    // function submitOrder(e){
-    //   e.preventDefault();
-
-    //   const form = document.getElementById("checkoutForm");
-    //   const data = Object.fromEntries(new FormData(form).entries());
-
-    //   const subtotal = Number(currentItem.price || 0);
-    //   const discountAmount = Math.round((subtotal * currentDiscountPct) / 100);
-    //   const total = Math.max(0, subtotal - discountAmount);
-
-    //   const order = {
-    //     itemId: currentItem.id,
-    //     itemTitle: currentItem.title,
-    //     amount: total,
-    //     currency: "USD",
-    //     discountPct: currentDiscountPct,
-    //     customer: {
-    //       name: data.name,
-    //       phone: data.phone,
-    //       email: data.email
-    //     }
-    //   };
-
-    //   console.log("ORDER PAYLOAD (send to backend):", order);
-    //   return false;
-    // }
-
     // =========================
     // INIT
     // =========================
@@ -426,83 +582,5 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
-<!-- If you want to use the popup integration, -->
-<script>
-    var obj = {};
-
-    $(document).ready(function () {
-
-        $('#sslczPayBtn').on('click', function (e) {
-
-            // 🔴 Basic form validation
-            var form = document.getElementById('checkoutForm');
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                e.preventDefault();
-                return false;
-            }
-
-            // 👤 Get user input
-            var formData = new FormData(form);
-
-            var customer = {
-                name: formData.get('name'),
-                phone: formData.get('phone'),
-                email: formData.get('email')
-            };
-
-            // 📦 Product info (from selected item)
-            var product = {
-                product_id: currentItem.id,
-                title: currentItem.title,
-                unit_price: currentItem.price,
-                quantity: 1
-            };
-
-            // 🧾 Cart JSON
-            var cartData = {
-                customer: customer,
-                product: product,
-                discount_pct: currentDiscountPct
-            };
-
-            // 🔐 Data sent to backend
-            obj.order = "checkout_" + currentItem.id + "_" + Date.now();
-            obj.cart_json = JSON.stringify(cartData);
-
-            // Optional (SSLCommerz standard fields)
-            obj.cus_name  = customer.name;
-            obj.cus_phone = customer.phone;
-            obj.cus_email = customer.email;
-
-            // Attach to button
-            $('#sslczPayBtn').prop('postdata', obj);
-
-            return true; // allow popup
-        });
-
-    });
-
-    (function (window, document) {
-        var loader = function () {
-            var script = document.createElement("script"),
-                tag = document.getElementsByTagName("script")[0];
-
-            // SANDBOX
-            script.src = "https://sandbox.sslcommerz.com/embed.min.js?" +
-                Math.random().toString(36).substring(7);
-
-            // LIVE (uncomment for production)
-            // script.src = "https://seamless-epay.sslcommerz.com/embed.min.js?" +
-            //     Math.random().toString(36).substring(7);
-
-            tag.parentNode.insertBefore(script, tag);
-        };
-
-        window.addEventListener
-            ? window.addEventListener("load", loader, false)
-            : window.attachEvent("onload", loader);
-    })(window, document);
-</script>
 
 </html>
