@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Order;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CheckoutController;
 /*
@@ -55,7 +57,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/order_list', function () {
-    return view('admin.order_list'); 
 
-    
+    $orders = Order::latest()->paginate(10);
+
+    return view('admin.order_list', compact('orders'));
+
 })->middleware(['auth'])->name('order_list');

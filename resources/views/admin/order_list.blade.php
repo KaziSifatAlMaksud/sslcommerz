@@ -8,68 +8,86 @@
 </head>
 <body class="bg-gray-100 font-sans">
 
+  <div class="flex h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white flex flex-col">
+        <div class="p-6 text-2xl font-bold border-b border-gray-700">
+            Admin Panel
+        </div>
+
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="{{ route('dashboard') }}" class="block p-2 rounded hover:bg-gray-700 transition">Dashboard</a>
+            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Users</a>
+            <a href="{{ route('order_list') }}" class="block p-2 rounded hover:bg-gray-700 transition">Orders</a>
+            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Products</a>
+            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Settings</a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-700">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button class="w-full bg-red-500 p-2 rounded hover:bg-red-600 transition">
+                    Logout
+                </button>
+            </form>
+        </div>
+    </aside>
+
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+
+        <!-- Navbar -->
+        <header class="bg-white shadow p-4 flex justify-between items-center">
+            <h1 class="text-xl font-semibold">Dashboard</h1>
+            <div>
+                Welcome, <span class="font-semibold">{{ Auth::user()->name }}</span>
+            </div>
+        </header>
+
   <div class="max-w-6xl mx-auto py-10">
     <h1 class="text-3xl font-bold mb-6">অর্ডার লিস্ট</h1>
 
-    <div class="overflow-x-auto">
-      <table class="min-w-full bg-white rounded-xl overflow-hidden">
-        <thead class="bg-indigo-500 text-white">
-          <tr>
-            <th class="px-4 py-2">ID</th>
-            <th class="px-4 py-2">Name</th>
-            <th class="px-4 py-2">Phone</th>
-            <th class="px-4 py-2">Email</th>
-            <th class="px-4 py-2">Amount</th>
-            <th class="px-4 py-2">Transaction ID</th>
-            <th class="px-4 py-2">Status</th>
-            <th class="px-4 py-2">Date</th>
-            <th class="px-4 py-2">Screenshot</th>
-          </tr>
+    <div class="bg-white p-6 rounded-lg shadow">
+    <h2 class="text-xl font-semibold mb-4">Recent Orders</h2>
+
+    <table class="w-full table-auto border-collapse">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="border p-2 text-left">Order ID</th>
+                <th class="border p-2 text-left">Customer Name</th>
+                <th class="border p-2 text-left">Phone</th>
+                <th class="border p-2 text-left">Product</th>
+            </tr>
         </thead>
-        <tbody class="text-gray-700">
-          <!-- Example order row -->
-          <tr class="border-b hover:bg-gray-50">
-            <td class="px-4 py-2">1</td>
-            <td class="px-4 py-2">Kazi Sifat</td>
-            <td class="px-4 py-2">+880123456789</td>
-            <td class="px-4 py-2">example@gmail.com</td>
-            <td class="px-4 py-2">৳349</td>
-            <td class="px-4 py-2">DBXX000001</td>
-            <td class="px-4 py-2">
-              <span class="px-2 py-1 rounded text-white bg-yellow-500">Pending</span>
-            </td>
-            <td class="px-4 py-2">09 Mar, 2026 12:30</td>
-            <td class="px-4 py-2">
-              <a href="path/to/image.jpg" target="_blank">
-                <img src="path/to/image.jpg" class="w-16 h-16 object-cover rounded">
-              </a>
-            </td>
-          </tr>
 
-          <!-- আরও অর্ডার এখানে যোগ করুন -->
-          <tr class="border-b hover:bg-gray-50">
-            <td class="px-4 py-2">2</td>
-            <td class="px-4 py-2">Rahim Ali</td>
-            <td class="px-4 py-2">+880987654321</td>
-            <td class="px-4 py-2">rahim@example.com</td>
-            <td class="px-4 py-2">৳500</td>
-            <td class="px-4 py-2">DBXX000002</td>
-            <td class="px-4 py-2">
-              <span class="px-2 py-1 rounded text-white bg-green-500">Completed</span>
-            </td>
-            <td class="px-4 py-2">08 Mar, 2026 15:20</td>
-            <td class="px-4 py-2">
-              <a href="path/to/image2.jpg" target="_blank">
-                <img src="path/to/image2.jpg" class="w-16 h-16 object-cover rounded">
-              </a>
-            </td>
-          </tr>
-
+        <tbody>
+            @forelse($orders as $order)
+            <tr class="hover:bg-gray-50">
+                <td class="border p-2">{{ $order->id }}</td>
+                <td class="border p-2">{{ $order->name }}</td>
+                <td class="border p-2">{{ $order->phone }}</td>
+                <td class="border p-2">{{ $order->product }}</td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="4" class="border p-4 text-center text-gray-500">
+                    No orders found
+                </td>
+            </tr>
+            @endforelse
         </tbody>
-      </table>
-    </div>
+    </table>
+</div>
+<div class="mt-4">
+    {{ $orders->links() }}
+</div>
 
   </div>
 
+    </div>
+
+</div>
 </body>
 </html>

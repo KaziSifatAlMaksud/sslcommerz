@@ -135,9 +135,9 @@
       >
         <a href="/" class="flex items-center gap-3">
           <div
-            class="h-9 w-9 rounded-xl bg-indigo-500/20 border border-indigo-400/30 grid place-items-center"
+            class="h-11 w-11 bg-indigo-500/20 border border-indigo-400/30 grid place-items-center"
           >
-            <span class="text-indigo-200 font-extrabold">AC</span>
+            <img src="{{ asset('images/logo.png') }}" alt="Logo">
           </div>
           <div>
             <p class="text-sm font-semibold leading-none">সব কোর্স</p>
@@ -270,7 +270,7 @@
                 এখনই কিনুন
               </a>
               <a
-                href="#details"
+                href="details"
                 class="inline-flex justify-center items-center px-5 py-3 rounded-2xl glass hover:opacity-90 transition font-semibold"
               >
                 বিস্তারিত দেখুন

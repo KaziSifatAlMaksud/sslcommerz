@@ -143,9 +143,9 @@
       >
         <div class="flex items-center gap-3">
           <div
-            class="h-9 w-9 rounded-xl bg-indigo-500/20 border border-indigo-400/30 grid place-items-center"
+            class="h-11 w-11 bg-indigo-500/20 border border-indigo-400/30 grid place-items-center"
           >
-            <span class="text-indigo-200 font-extrabold">AC</span>
+            <img src="{{ asset('images/logo.png') }}" alt="Logo">
           </div>
           <div>
             <p class="text-sm font-semibold leading-none">সব কোর্স</p>
@@ -460,42 +460,42 @@
       ];
 
       const softwares = [
-        {
-          id: "s1",
-          title: "Canva Pro",
-          category: "Design",
-          price: 200,
-          rating: 4.8,
-          badge: "Top Tool",
-          desc: "প্রিমিয়াম টেমপ্লেট, ব্র্যান্ড কিট, ব্যাকগ্রাউন্ড রিমুভার।",
-          includes: ["১ বছর", "টিম ফিচার", "প্রিমিয়াম অ্যাসেটস"],
-          platform: "ওয়েব",
-          license: "সাবস্ক্রিপশন",
-        },
-        {
-          id: "s2",
-          title: "Adobe Photoshop",
-          category: "Design",
-          price: 300,
-          rating: 4.7,
-          badge: "Pro",
-          desc: "অ্যাডভান্সড ফটো এডিটিং ও ডিজাইন ওয়ার্কফ্লো।",
-          includes: ["১ বছর", "আপডেট", "ক্লাউড স্টোরেজ"],
-          platform: "Windows/Mac",
-          license: "সাবস্ক্রিপশন",
-        },
-        {
-          id: "s3",
-          title: "CapCut Pro",
-          category: "Video",
-          price: 8,
-          rating: 4.6,
-          badge: "Trending",
-          desc: "প্রো ইফেক্ট, ট্রানজিশন এবং এডিটিং টুলকিট।",
-          includes: ["৬ মাস", "প্রিমিয়াম ইফেক্ট", "এক্সপোর্ট"],
-          platform: "মোবাইল/ওয়েব",
-          license: "সাবস্ক্রিপশন",
-        },
+        // {
+        //   id: "s1",
+        //   title: "Canva Pro",
+        //   category: "Design",
+        //   price: 200,
+        //   rating: 4.8,
+        //   badge: "Top Tool",
+        //   desc: "প্রিমিয়াম টেমপ্লেট, ব্র্যান্ড কিট, ব্যাকগ্রাউন্ড রিমুভার।",
+        //   includes: ["১ বছর", "টিম ফিচার", "প্রিমিয়াম অ্যাসেটস"],
+        //   platform: "ওয়েব",
+        //   license: "সাবস্ক্রিপশন",
+        // },
+        // {
+        //   id: "s2",
+        //   title: "Adobe Photoshop",
+        //   category: "Design",
+        //   price: 300,
+        //   rating: 4.7,
+        //   badge: "Pro",
+        //   desc: "অ্যাডভান্সড ফটো এডিটিং ও ডিজাইন ওয়ার্কফ্লো।",
+        //   includes: ["১ বছর", "আপডেট", "ক্লাউড স্টোরেজ"],
+        //   platform: "Windows/Mac",
+        //   license: "সাবস্ক্রিপশন",
+        // },
+        // {
+        //   id: "s3",
+        //   title: "CapCut Pro",
+        //   category: "Video",
+        //   price: 8,
+        //   rating: 4.6,
+        //   badge: "Trending",
+        //   desc: "প্রো ইফেক্ট, ট্রানজিশন এবং এডিটিং টুলকিট।",
+        //   includes: ["৬ মাস", "প্রিমিয়াম ইফেক্ট", "এক্সপোর্ট"],
+        //   platform: "মোবাইল/ওয়েব",
+        //   license: "সাবস্ক্রিপশন",
+        // },
       ];
 
       // =========================

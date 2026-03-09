@@ -89,9 +89,11 @@
   <header class="sticky top-0 z-50 border-b header-bg" style="border-color: var(--border);">
     <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
       <a href="/" class="flex items-center gap-3">
-        <div class="h-9 w-9 rounded-xl bg-indigo-500/20 border border-indigo-400/30 grid place-items-center">
-          <span class="text-indigo-200 font-extrabold">AC</span>
-        </div>
+       <div
+            class="h-11 w-11 bg-indigo-500/20 border border-indigo-400/30 grid place-items-center"
+          >
+            <img src="{{ asset('images/logo.png') }}" alt="Logo">
+          </div>
         <div>
           <p class="text-sm font-semibold leading-none">সব কোর্স</p>
           <p class="text-xs muted">সিকিউর চেকআউট</p>

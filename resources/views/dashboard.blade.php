@@ -18,9 +18,9 @@
         </div>
 
         <nav class="flex-1 p-4 space-y-2">
-            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Dashboard</a>
+            <a href="" class="block p-2 rounded hover:bg-gray-700 transition">Dashboard</a>
             <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Users</a>
-            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Orders</a>
+            <a href="{{ route('order_list') }}" class="block p-2 rounded hover:bg-gray-700 transition">Orders</a>
             <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Products</a>
             <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Settings</a>
         </nav>
