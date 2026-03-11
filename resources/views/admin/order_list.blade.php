@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>অর্ডার লিস্ট</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
@@ -49,37 +50,123 @@
   <div class="max-w-6xl mx-auto py-10">
     <h1 class="text-3xl font-bold mb-6">অর্ডার লিস্ট</h1>
 
-    <div class="bg-white p-6 rounded-lg shadow">
-    <h2 class="text-xl font-semibold mb-4">Recent Orders</h2>
+<div class="bg-white p-6 rounded-lg shadow overflow-x-auto">
 
-    <table class="w-full table-auto border-collapse">
-        <thead>
-            <tr class="bg-gray-100">
-                <th class="border p-2 text-left">Order ID</th>
-                <th class="border p-2 text-left">Customer Name</th>
-                <th class="border p-2 text-left">Phone</th>
-                <th class="border p-2 text-left">Product</th>
-            </tr>
-        </thead>
+<table class="min-w-full border-collapse text-sm">
+<thead>
+<tr class="bg-gray-100">
+    <th class="border p-2">Order ID</th>
+    <th class="border p-2">Customer</th>
+    <th class="border p-2">Phone</th>
+    <th class="border p-2">Amount</th>
+    <th class="border p-2">Status</th>
+    <th class="border p-2">Image</th>
+    <th class="border p-2">Bkash ID</th>
+    <th class="border p-2">Action</th>
+</tr>
+</thead>
 
-        <tbody>
-            @forelse($orders as $order)
-            <tr class="hover:bg-gray-50">
-                <td class="border p-2">{{ $order->id }}</td>
-                <td class="border p-2">{{ $order->name }}</td>
-                <td class="border p-2">{{ $order->phone }}</td>
-                <td class="border p-2">{{ $order->product }}</td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="4" class="border p-4 text-center text-gray-500">
-                    No orders found
-                </td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+<tbody>
+@forelse($orders as $order)
+<tr class="hover:bg-gray-50">
+
+        <td class="border p-2">{{ $order->id }}</td>
+
+        <td class="border p-2">
+            <div class="font-semibold">{{ $order->name }}</div>
+            <div class="text-gray-500 text-xs">{{ $order->email }}</div>
+        </td>
+
+        <td class="border p-2">{{ $order->phone }}</td>
+
+        <td class="border p-2 font-semibold">
+            {{ $order->amount }} {{ $order->currency }}
+        </td>
+
+        <td class="border p-2">
+
+        @if($order->status == 'Pending')
+        <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">
+        Pending
+        </span>
+        @else
+        <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
+        Paid
+        </span>
+        @endif
+
+        </td>
+
+        <td class="border p-2">
+        @if ($order->transaction_file)
+        <a href="{{ asset('storage/' . $order->transaction_file) }}" target="_blank">
+        <img src="{{ asset('storage/' . $order->transaction_file) }}"
+        class="w-14 h-14 object-cover rounded hover:scale-110 transition">
+        </a>
+        @else
+        <span class="text-gray-400 text-xs">No Image</span>
+        @endif
+        </td>
+
+        <td class="border p-2 text-xs">
+        {{ $order->transaction_bkash_id }}
+        </td>
+
+        <td class="border p-2 flex gap-2">
+
+        <!-- Payment Complete Button -->
+      @if($order->status == 'Complete')
+
+        <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
+        Complete
+        </span>
+
+        @else
+
+        <form action="{{ route('payment.complete', $order->id) }}" method="POST">
+        @csrf
+
+        <button class="bg-yellow-500 text-white px-2 py-1 rounded text-xs hover:bg-yellow-600">
+        Incomplete
+        </button>
+
+        </form>
+      @endif
+
+        <!-- Invoice Icon -->
+            <a href="{{ route('invoice.show', $order->id) }}"
+            class="text-blue-500 hover:text-blue-700 text-lg">
+            <i class="bi bi-receipt"></i>
+            </a>
+
+        </td>
+
+</tr>
+@empty
+
+<tr>
+<td colspan="8" class="text-center p-6 text-gray-500">
+No orders found
+</td>
+</tr>
+
+@endforelse
+</tbody>
+</table>
+
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="mt-4">
     {{ $orders->links() }}
 </div>

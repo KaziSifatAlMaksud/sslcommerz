@@ -56,9 +56,20 @@ Route::get('/dashboard', function () {
 
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/invoice/{order}', function (Order $order) {
+    return view('InvoiceShow', compact('order')); 
+})->middleware(['auth'])->name('invoice.show');
+
+
+Route::get('/payment/complete/{order}', function (Order $order) {
+    return view('InvoiceShow', compact('order')); 
+})->middleware(['auth'])->name('payment.complete');
+
+
+
 Route::get('/order_list', function () {
 
-    $orders = Order::latest()->paginate(10);
+    $orders = Order::latest()->paginate(7);
 
     return view('admin.order_list', compact('orders'));
 

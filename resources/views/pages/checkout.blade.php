@@ -180,7 +180,17 @@
           </div>
 
           <div>
-            <label class="text-sm">Bkash / Nagad / Rocket (Transaction ID)</label>
+          
+            <p>
+              1️⃣ আপনার bKash / Nagad / Rocket অ্যাপটি খুলুন।<br>
+              2️⃣ Send Money অপশনটি নির্বাচন করুন।<br>
+              3️⃣ নাম্বারটি লিখুন: <b>01322696950</b> <br>
+              4️⃣ যে পরিমাণ টাকা দিতে হবে তা লিখুন।<br>
+              5️⃣ আপনার PIN দিয়ে পেমেন্ট সম্পন্ন করুন।<br>
+              6️⃣ Transaction ID কপি করে রাখুন।<br>
+              7️⃣ ফর্মে Transaction ID এবং পেমেন্টের স্ক্রিনশট সাবমিট করুন।<br>
+            </p><br>
+             <label class="text-sm">Bkash / Nagad / Rocket (Transaction ID)</label>
             <div class="mt-2 flex gap-2">
               <input id="couponInput" placeholder="DBXX000000" name="transaction_bkash_id" value="{{ old('transaction_bkash_id') }}"
                      class="w-full rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-300/40 input-ui" required />
