@@ -19,10 +19,10 @@
 
         <nav class="flex-1 p-4 space-y-2">
             <a href="{{ route('dashboard') }}" class="block p-2 rounded hover:bg-gray-700 transition">Dashboard</a>
-            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Users</a>
+            {{-- <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Users</a> --}}
             <a href="{{ route('order_list') }}" class="block p-2 rounded hover:bg-gray-700 transition">Orders</a>
-            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Products</a>
-            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Settings</a>
+            {{-- <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Products</a>
+            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Settings</a> --}}
         </nav>
 
         <div class="p-4 border-t border-gray-700">
@@ -49,6 +49,12 @@
 
   <div class="max-w-6xl mx-auto py-10">
     <h1 class="text-3xl font-bold mb-6">অর্ডার লিস্ট</h1>
+
+    @if(session('success'))
+<div class="bg-green-500 text-white p-2 rounded mb-2">
+    {{ session('success') }}
+</div>
+@endif
 
 <div class="bg-white p-6 rounded-lg shadow overflow-x-auto">
 
@@ -123,14 +129,12 @@
 
         @else
 
-        <form action="{{ route('payment.complete', $order->id) }}" method="POST">
-        @csrf
-
-        <button class="bg-yellow-500 text-white px-2 py-1 rounded text-xs hover:bg-yellow-600">
-        Incomplete
+        <button type="button"
+            onclick="openModal({{ $order->id }})"
+            class="bg-yellow-500 text-white px-2 py-1 rounded text-xs hover:bg-yellow-600">
+            Incomplete
         </button>
 
-        </form>
       @endif
 
         <!-- Invoice Icon -->
@@ -156,12 +160,51 @@ No orders found
 
 </div>
 
+<div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    
+    <div class="bg-white p-6 rounded shadow-md w-80 text-center">
 
+        <h2 class="text-lg font-semibold mb-4">
+        Are you sure you want to complete this order?
+        </h2>
 
+        <form id="completeForm" method="POST">
+        @csrf
 
+        <div class="flex justify-center gap-3">
 
+        <button type="submit"
+        class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+        Yes, Complete
+        </button>
 
+        <button type="button"
+        onclick="closeModal()"
+        class="bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500">
+        Cancel
+        </button>
 
+        </div>
+
+        </form>
+
+    </div>
+</div>
+<script>
+function openModal(orderId) {
+
+    let form = document.getElementById('completeForm');
+
+    form.action = "/payment/complete/" + orderId;
+
+    document.getElementById('confirmModal').classList.remove('hidden');
+    document.getElementById('confirmModal').classList.add('flex');
+}
+
+function closeModal() {
+    document.getElementById('confirmModal').classList.add('hidden');
+}
+</script>
 
 
 

@@ -18,6 +18,8 @@ class Order extends Model
         'transaction_id',
         'transaction_file',
         'transaction_bkash_id',
-        'currency'
+        'currency',
+        'product_id',
+        'product_name'
     ];
 }

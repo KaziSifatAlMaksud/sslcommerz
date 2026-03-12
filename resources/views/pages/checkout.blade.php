@@ -147,6 +147,12 @@
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label class="text-sm">পূর্ণ নাম</label>
+
+              
+
+              <input  name="product_name" id="productNameInput" value="{{ old('product_name') }}" />
+              <input  name="product_id" id="productIdInput" value="{{ old('product_id') }}" />
+
               <input required name="name" placeholder="আপনার নাম" value="{{ old('name') }}"
                      class="mt-2 w-full rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-300/40 input-ui" />
             </div>
@@ -413,7 +419,7 @@
         {
           id: "c1",
            type: "course", 
-          title: "🎬 Facebook Monetization Mastery",
+          title: "Facebook Monetization Mastery",
           category: "Marketing",
           price: 349,
           rating: 4.9,
@@ -507,7 +513,6 @@
 
     function renderSummary(){
       if(!currentItem) return;
-      
 
       // ✅ image (fallback)
       const imgSrc = currentItem.image || (currentItem.type === "software" ? "images/software.jpg" : "images/course.jpg");
@@ -518,6 +523,11 @@
         `${currentItem.type.toUpperCase()} • ${currentItem.category}`;
 
         document.getElementById("amountInput").value = currentItem.price || 0;
+
+              
+     document.getElementById("productIdInput").value = currentItem.id;
+     document.getElementById("productNameInput").value = currentItem.title;
+
 
       document.getElementById("itemTitle").textContent = currentItem.title;
       document.getElementById("itemDesc").textContent = currentItem.desc;

@@ -18,11 +18,11 @@
         </div>
 
         <nav class="flex-1 p-4 space-y-2">
-            <a href="" class="block p-2 rounded hover:bg-gray-700 transition">Dashboard</a>
-            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Users</a>
+            <a href="{{ route('dashboard') }}" class="block p-2 rounded hover:bg-gray-700 transition">Dashboard</a>
+            {{-- <a href="" class="block p-2 rounded hover:bg-gray-700 transition">Users</a> --}}
             <a href="{{ route('order_list') }}" class="block p-2 rounded hover:bg-gray-700 transition">Orders</a>
-            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Products</a>
-            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Settings</a>
+            {{-- <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Products</a>
+            <a href="#" class="block p-2 rounded hover:bg-gray-700 transition">Settings</a> --}}
         </nav>
 
         <div class="p-4 border-t border-gray-700">
@@ -47,69 +47,48 @@
         </header>
 
         <!-- Dashboard Content -->
-        <main class="p-6 flex-1 overflow-y-auto">
+    <main class="p-6 flex-1 overflow-y-auto">
 
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
 
-                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-                    <h3 class="text-gray-500 text-sm">Total Users</h3>
-                    <p class="text-3xl font-bold mt-2">120</p>
-                </div>
+        <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <h3 class="text-gray-500 text-sm">Total Orders</h3>
+            <p class="text-3xl font-bold mt-2">{{ $totalOrders }}</p>
+        </div>
 
-                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-                    <h3 class="text-gray-500 text-sm">Orders</h3>
-                    <p class="text-3xl font-bold mt-2">75</p>
-                </div>
+        <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <h3 class="text-gray-500 text-sm">Total Revenue</h3>
+            <p class="text-3xl font-bold mt-2">৳{{ number_format($totalRevenue, 2) }}</p>
+        </div>
 
-                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-                    <h3 class="text-gray-500 text-sm">Products</h3>
-                    <p class="text-3xl font-bold mt-2">48</p>
-                </div>
+        <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <h3 class="text-gray-500 text-sm">Weekly Revenue</h3>
+            <p class="text-3xl font-bold mt-2">৳{{ number_format($weekRevenue, 2) }}</p>
+        </div>
 
-                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-                    <h3 class="text-gray-500 text-sm">Revenue</h3>
-                    <p class="text-3xl font-bold mt-2">$4,200</p>
-                </div>
+        <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <h3 class="text-gray-500 text-sm">Monthly Revenue</h3>
+            <p class="text-3xl font-bold mt-2">৳{{ number_format($monthRevenue, 2) }}</p>
+        </div>
 
-            </div>
+    </div>
 
-            <!-- Recent Activity Table -->
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h2 class="text-xl font-semibold mb-4">Recent Orders</h2>
-                <table class="w-full table-auto border-collapse">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="border p-2 text-left">Order ID</th>
-                            <th class="border p-2 text-left">Customer</th>
-                            <th class="border p-2 text-left">Amount</th>
-                            <th class="border p-2 text-left">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="hover:bg-gray-50">
-                            <td class="border p-2">#1001</td>
-                            <td class="border p-2">John Doe</td>
-                            <td class="border p-2">$120</td>
-                            <td class="border p-2 text-green-600 font-semibold">Completed</td>
-                        </tr>
-                        <tr class="hover:bg-gray-50">
-                            <td class="border p-2">#1002</td>
-                            <td class="border p-2">Jane Smith</td>
-                            <td class="border p-2">$75</td>
-                            <td class="border p-2 text-yellow-600 font-semibold">Pending</td>
-                        </tr>
-                        <tr class="hover:bg-gray-50">
-                            <td class="border p-2">#1003</td>
-                            <td class="border p-2">Michael Lee</td>
-                            <td class="border p-2">$200</td>
-                            <td class="border p-2 text-red-600 font-semibold">Cancelled</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <!-- Additional Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-6">
 
-        </main>
+        <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <h3 class="text-gray-500 text-sm">Average Order Value</h3>
+            <p class="text-3xl font-bold mt-2">৳{{ number_format($avgOrder, 2) }}</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+            <h3 class="text-gray-500 text-sm">Orders This Month</h3>
+            <p class="text-3xl font-bold mt-2">{{ \App\Models\Order::whereMonth('created_at', \Carbon\Carbon::now()->month)->count() }}</p>
+        </div>
+
+    </div>
+</main>
 
     </div>
 

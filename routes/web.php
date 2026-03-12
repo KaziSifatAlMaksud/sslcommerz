@@ -4,6 +4,7 @@ use App\Models\Order;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Admin\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,22 +51,30 @@ Route::post('/checkout_page', [CheckoutController::class, 'store'])->name('check
 
 Route::get('/success/{order}', [CheckoutController::class, 'success'])->name('success_page');
 
-Route::get('/dashboard', function () {
-    return view('dashboard'); 
 
 
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [AdminController::class, 'dashboard'])
+     ->middleware(['auth'])
+     ->name('dashboard');
 
 Route::get('/invoice/{order}', function (Order $order) {
     return view('InvoiceShow', compact('order')); 
 })->middleware(['auth'])->name('invoice.show');
 
 
-Route::get('/payment/complete/{order}', function (Order $order) {
-    return view('InvoiceShow', compact('order')); 
+Route::post('/payment/complete/{order}', function (Order $order) {
+
+    $order->status = 'Complete';
+    $order->save();
+
+    return redirect()->back()->with('success', 'Order completed successfully!');
+
 })->middleware(['auth'])->name('payment.complete');
 
 
+Route::get('/invoice/{order}', function (Order $order) {
+    return view('admin.invoice_show', compact('order'));
+})->name('invoice.show');
 
 Route::get('/order_list', function () {
 
